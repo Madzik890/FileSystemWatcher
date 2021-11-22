@@ -1,56 +1,53 @@
-import QtQuick 2.0
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import File 1.0
 
 Item {
-    id: root
+    property var fileWatcher: fileSystemWatcher
 
     ColumnLayout
     {
-        FileModel {
-            id: fileModel
-        }
+        width: parent.width
+        height: parent.height
 
-        TableView {
-            id: fileTable
-            width: 300
-            height: 300
-            model: fileModel
-        }
+        RowLayout {
+            width: parent.width
 
-        TextEdit {
-            id: textEdit
-            width: root.width
-            height: 30
-            text: "Add path to watch"
+            TextField {
+                id: textEdit
+                height: 30
+                text: "C:\\Users\\Marcin\\Desktop\\powder toy"
+            }
 
             Button {
-                    text: "Add"
+                text: "Add"
+                onPressed: fileSystemWatcher.addPath(textEdit.text);
             }
+        }
+
+        DirectoryModelView {
+            width: parent.width
+            height: 150
+        }
+
+        FileModelView {
+            width: parent.width
+            height: 150
         }
 
         RowLayout
         {
             Button {
                 text: "Clear"
-                onPressed:  {
-                    fileSystemWatcher.clear();
-                }
+                onPressed: fileSystemWatcher.clear();
             }
             Button {
                 text: "Start"
-                onPressed:  {
-                    fileModel.fileSystemWatcher = fileSystemWatcher;
-                    fileSystemWatcher.start();
-                }
+                onPressed: fileSystemWatcher.start();
             }
             Button {
                 text: "Stop"
-                onPressed:  {
-                    fileSystemWatcher.stop();
-                }
+                onPressed: fileSystemWatcher.stop();
             }
         }
     }

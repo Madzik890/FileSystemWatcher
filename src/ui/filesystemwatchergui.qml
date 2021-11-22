@@ -1,9 +1,6 @@
-import QtQuick 2.0
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import File 1.0
-import Dir 1.0
 
 Item {
     property var fileWatcher: fileSystemWatcher
@@ -12,16 +9,6 @@ Item {
     {
         width: parent.width
         height: parent.height
-
-        FileModel {
-            id: fileModel
-            fileSystemWatcher: fileWatcher
-        }
-
-        DirModel {
-            id: dirModel
-            fileSystemWatcher: fileWatcher
-        }
 
         RowLayout {
             width: parent.width
@@ -38,57 +25,14 @@ Item {
             }
         }
 
-        ListView {
-            implicitWidth: parent.width
-            implicitHeight: 150
-            clip: true            
-            model: dirModel
-
-            delegate: RowLayout {
-                width: parent.width
-
-                Text {
-                    text: model.display
-                    Layout.fillWidth: true
-                }
-
-                Button {
-                    text: "Remove"
-                    onPressed: fileSystemWatcher.removePath(model.display);
-                }
-            }
+        DirectoryModelView {
+            width: parent.width
+            height: 150
         }
 
-        TableView {
-            id: fileTable
+        FileModelView {
             width: parent.width
-            height: 200
-            clip: true
-            model: fileModel
-
-            delegate: RowLayout {
-                width: parent.width
-
-                Text {
-                    text: model.event
-                    Layout.fillWidth: true
-                }
-
-                Text {
-                    text: model.path
-                    Layout.fillWidth: true
-                }
-
-                Text {
-                    text: model.isFolder
-                    Layout.fillWidth: true
-                }
-
-                Text {
-                    text: model.timestamp
-                    Layout.fillWidth: true
-                }
-            }
+            height: 150
         }
 
         RowLayout

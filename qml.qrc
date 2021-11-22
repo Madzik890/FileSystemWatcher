@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>src/ui/main.qml</file>
         <file>src/ui/FileSystemWatcherGUI.qml</file>
+        <file>src/ui/DirectoryModelView.qml</file>
+        <file>src/ui/FileModelView.qml</file>
     </qresource>
 </RCC>

@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
 
 
     qmlRegisterType<Domain::System::Core::Models::FileModel>("File", 1, 0, "FileModel");
+    qmlRegisterType<Domain::System::Core::Models::DirectoryModel>("Dir", 1, 0, "DirModel");
     IFileSystemWatcher *fileSystemWatcher = FileSystemWatcherFactory::createFileSystemWatcher("");
-
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/src/ui/main.qml"));

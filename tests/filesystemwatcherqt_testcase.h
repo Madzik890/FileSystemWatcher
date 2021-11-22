@@ -46,26 +46,10 @@ private slots:
         QCOMPARE(spy.count(), 1);
     }
 
-    void addPaths()
-    {
-        QSignalSpy spy(_watcher, &IFileSystemWatcher::directoryAppend);
-        _watcher->addPaths(EXAMPLE_PATH_LIST);
-        spy.wait(100);
-        QCOMPARE(spy.count(), 1);
-    }
-
     void removePath()
     {
         QSignalSpy spy(_watcher, &IFileSystemWatcher::directoryAppend);
         _watcher->removePath(EXAMPLE_PATH);
-        spy.wait(100);
-        QCOMPARE(spy.count(), 1);
-    }
-
-    void removePaths()
-    {
-        QSignalSpy spy(_watcher, &IFileSystemWatcher::directoryAppend);
-        _watcher->removePaths(EXAMPLE_PATH_LIST);
         spy.wait(100);
         QCOMPARE(spy.count(), 1);
     }

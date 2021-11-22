@@ -19,16 +19,14 @@ namespace Domain
                     Q_INVOKABLE void start() noexcept override;
                     Q_INVOKABLE void stop() noexcept override;
 
-                    Q_INVOKABLE void addPath(const QString &path) noexcept override;
-                    void addPaths(const QStringList &pathsList) noexcept override;
+                    Q_INVOKABLE void addPath(const QString &path) noexcept override;                    
                     Q_INVOKABLE void removePath(const QString &path) noexcept override;
-                    void removePaths(const QStringList &paths) noexcept override;
 
                     const QStringList getDirectories() const override;
 
                 private:
                     bool _ownFileWatcher = false;
-                    QFileSystemWatcher *_fileWatcher = nullptr;
+                    QFileSystemWatcher *_fileWatcher = nullptr;                    
             };
         }
     }

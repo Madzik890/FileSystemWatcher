@@ -1,8 +1,10 @@
 #include "filesystemwatchernatvie.hpp"
 
 using namespace Domain::System::Infrastructure;
+using namespace Domain::System::Ports::Incoming;
 
 FileSystemWatcherNative::FileSystemWatcherNative(QObject *parent)
+    : IFileSystemWatcher(parent)
 {
 
 }
@@ -29,20 +31,10 @@ void FileSystemWatcherNative::stop() noexcept
 
 void FileSystemWatcherNative::addPath(const QString &path) noexcept
 {
-
-}
-
-void FileSystemWatcherNative::addPaths(const QStringList &pathsList) noexcept
-{
-
+    Q_UNUSED(path);
 }
 
 void FileSystemWatcherNative::removePath(const QString &path) noexcept
 {
-
-}
-
-void FileSystemWatcherNative::removePaths(const QStringList &paths) noexcept
-{
-
+    Q_UNUSED(path);
 }

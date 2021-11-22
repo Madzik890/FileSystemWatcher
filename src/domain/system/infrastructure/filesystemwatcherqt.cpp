@@ -1,4 +1,5 @@
 #include "filesystemwatcherqt.hpp"
+#include <QDir>
 
 using namespace Domain::System::Ports::Incoming;
 using namespace Domain::System::Infrastructure;
@@ -18,7 +19,6 @@ FileSystemWatcherQt::FileSystemWatcherQt(QFileSystemWatcher *watcher, QObject *p
     }
 
     Q_ASSERT(_fileWatcher);
-    _fileWatcher->addPath("C:\\Users\\Marcin\\Desktop\\powder toy");
 }
 
 FileSystemWatcherQt::~FileSystemWatcherQt()
@@ -32,38 +32,33 @@ FileSystemWatcherQt::~FileSystemWatcherQt()
 
 void FileSystemWatcherQt::start() noexcept
 {
-    QObject::connect(_fileWatcher, &QFileSystemWatcher::fileChanged, this, &FileSystemWatcherQt::onFileChanged);
-    QObject::connect(_fileWatcher, &QFileSystemWatcher::directoryChanged, this, &FileSystemWatcherQt::onFileChanged);
+    QObject::connect(_fileWatcher, &QFileSystemWatcher::directoryChanged, this, &FileSystemWatcherQt::onDirChanged);
 }
 
 void FileSystemWatcherQt::stop() noexcept
 {
-    QObject::disconnect(_fileWatcher, &QFileSystemWatcher::fileChanged, this, &FileSystemWatcherQt::onFileChanged);
-    QObject::disconnect(_fileWatcher, &QFileSystemWatcher::directoryChanged, this, &FileSystemWatcherQt::onFileChanged);
+    QObject::disconnect(_fileWatcher, &QFileSystemWatcher::directoryChanged, this, &FileSystemWatcherQt::onDirChanged);
 }
 
 void FileSystemWatcherQt::addPath(const QString &path) noexcept
 {
-    _fileWatcher->addPath(path);
-    emit IFileSystemWatcher::directoryAppend();
-}
-
-void FileSystemWatcherQt::addPaths(const QStringList &pathsList) noexcept
-{
-    _fileWatcher->addPaths(pathsList);
-    emit IFileSystemWatcher::directoryAppend();
+    if(_fileWatcher->addPath(path))
+    {
+        emit IFileSystemWatcher::directoryAppend();
+        const QDir dir(path);
+        _fileInfoList.push_back(std::make_pair(path, dir.entryInfoList(QDir::Files)));
+        emit IFileSystemWatcher::directoryAppended();
+    }
 }
 
 void FileSystemWatcherQt::removePath(const QString &path) noexcept
-{
-    _fileWatcher->removePath(path);
-    emit IFileSystemWatcher::directoryAppend();
-}
-
-void FileSystemWatcherQt::removePaths(const QStringList &paths) noexcept
-{
-    _fileWatcher->removePaths(paths);
-    emit IFileSystemWatcher::directoryAppend();
+{    
+    const int index = _fileWatcher->directories().indexOf(path);
+    if(index >= 0 && _fileWatcher->removePath(path))
+    {
+        emit IFileSystemWatcher::directoryRemove(index);
+        emit IFileSystemWatcher::directoryRemoved();
+    }
 }
 
 const QStringList FileSystemWatcherQt::getDirectories() const

@@ -1,57 +1,19 @@
 #include "directorymodel.hpp"
+#include <QtDebug>
 
 using namespace Domain::System::Core::Models;
-/*
+
 DirectoryModel::DirectoryModel(QObject *parent)
-    : QAbstractItemModel(parent)
+    :QAbstractListModel(parent)
 {
-}
 
-QVariant DirectoryModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-    // FIXME: Implement me!
-}
-
-QModelIndex DirectoryModel::index(int row, int column, const QModelIndex &parent) const
-{
-    // FIXME: Implement me!
-}
-
-QModelIndex DirectoryModel::parent(const QModelIndex &index) const
-{
-    // FIXME: Implement me!
 }
 
 int DirectoryModel::rowCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid() || !_fileSystemWatcher)
+    if (!_fileSystemWatcher)
         return 0;
-
     return _fileSystemWatcher->getDirectories().size();
-}
-
-int DirectoryModel::columnCount(const QModelIndex &parent) const
-{
-    if (!parent.isValid() || !_fileSystemWatcher)
-        return 0;
-
-    return 1;
-}
-
-bool DirectoryModel::hasChildren(const QModelIndex &parent) const
-{
-    // FIXME: Implement me!
-}
-
-bool DirectoryModel::canFetchMore(const QModelIndex &parent) const
-{
-    // FIXME: Implement me!
-    return false;
-}
-
-void DirectoryModel::fetchMore(const QModelIndex &parent)
-{
-    // FIXME: Implement me!
 }
 
 QVariant DirectoryModel::data(const QModelIndex &index, int role) const
@@ -59,21 +21,51 @@ QVariant DirectoryModel::data(const QModelIndex &index, int role) const
     if (!index.isValid() || !_fileSystemWatcher)
         return QVariant();
 
-    // FIXME: Implement me!
+    const QStringList dirList = _fileSystemWatcher->getDirectories();
+    if(dirList.size() > index.row())
+    {
+        const QString dir = dirList[index.row()];
+        return QVariant(dir);
+    }
+
     return QVariant();
 }
 
 void DirectoryModel::setFileSystemWatcher(IFileSystemWatcher *watcher)
 {
     _fileSystemWatcher = watcher;
-    Q_ASSERT(watcher);
 
-    beginResetModel();
-    _fileSystemWatcher->disconnect(this);
+    if(_fileSystemWatcher)
+    {
+        beginResetModel();
+        _fileSystemWatcher->disconnect(this);
+
+        QObject::connect(_fileSystemWatcher, &IFileSystemWatcher::directoryAppend, this, [=]()
+        {
+            const int index = _fileSystemWatcher->getDirectories().size() - 1;
+            beginInsertRows(QModelIndex(), index, index);
+        });
+
+        QObject::connect(_fileSystemWatcher, &IFileSystemWatcher::directoryAppended, this, [=]()
+        {
+            endInsertRows();
+        });
+
+        QObject::connect(_fileSystemWatcher, &IFileSystemWatcher::directoryRemove, this, [=](const int index)
+        {
+            beginRemoveRows(QModelIndex(), index, index);
+        });
+
+        QObject::connect(_fileSystemWatcher, &IFileSystemWatcher::directoryRemoved, this, [=]()
+        {
+            endRemoveRows();
+        });
+
+        endResetModel();
+    }
 }
 
 IFileSystemWatcher *DirectoryModel::getFileSystemWatcher() const
 {
     return _fileSystemWatcher;
 }
-*/

@@ -26,6 +26,7 @@ namespace Domain
                     {
 
                     }
+                    ~FileItem() = default;
 
                     FileEventType _eventType = FileEventType::created;
                     QString _path = "";

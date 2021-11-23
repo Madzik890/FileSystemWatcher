@@ -1,5 +1,6 @@
 #include "filesystemwatcherqt.hpp"
 #include <QDir>
+#include <QUrl>
 
 using namespace Domain::System::Ports::Incoming;
 using namespace Domain::System::Infrastructure;
@@ -49,6 +50,11 @@ void FileSystemWatcherQt::addPath(const QString &path) noexcept
         _fileInfoList.push_back(std::make_pair(path, dir.entryInfoList(QDir::Files)));
         emit IFileSystemWatcher::directoryAppended();
     }
+}
+
+void FileSystemWatcherQt::addPath(const QUrl &path) noexcept
+{
+    addPath(path.path().mid(1));
 }
 
 void FileSystemWatcherQt::removePath(const QString &path) noexcept

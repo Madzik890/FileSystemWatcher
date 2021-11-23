@@ -5,7 +5,7 @@ using namespace Domain::System::Ports::Incoming;
 using namespace Domain::System::Infrastructure;
 
 FileSystemWatcherQt::FileSystemWatcherQt(QFileSystemWatcher *watcher, QObject *parent)
-    :IFileSystemWatcher(parent)
+    : IFileSystemWatcher(parent)
 {
     if(watcher)
     {

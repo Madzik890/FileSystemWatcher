@@ -3,8 +3,9 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 import Dir 1.0
 
-Item {
+Rectangle {
     property var fileWatcher: fileSystemWatcher
+    color: "grey"
 
     DirModel {
         id: dirModel

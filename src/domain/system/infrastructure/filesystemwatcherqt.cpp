@@ -32,6 +32,7 @@ FileSystemWatcherQt::~FileSystemWatcherQt()
 
 void FileSystemWatcherQt::start() noexcept
 {
+    stop();
     QObject::connect(_fileWatcher, &QFileSystemWatcher::directoryChanged, this, &FileSystemWatcherQt::onDirChanged);
 }
 
@@ -46,7 +47,7 @@ void FileSystemWatcherQt::addPath(const QString &path) noexcept
     {
         emit IFileSystemWatcher::directoryAppend();
         const QDir dir(path);
-        _fileInfoList.push_back(std::make_pair(path, dir.entryInfoList(QDir::Files)));
+        _fileInfoList.push_back(std::make_pair(path, dir.entryInfoList(QDir::AllDirs | QDir::Files)));
         emit IFileSystemWatcher::directoryAppended();
     }
 }

@@ -33,7 +33,7 @@ void IFileSystemWatcher::onDirChanged(const QString &path)
     if(checkDirExists(path))
     {
         const QDir dir(path);
-        const QFileInfoList fileList = dir.entryInfoList(QDir::Files);
+        const QFileInfoList fileList = dir.entryInfoList(QDir::AllDirs | QDir::Files);
         for(auto &list : _fileInfoList)
         {
             if(list.first == path)
@@ -69,13 +69,17 @@ void IFileSystemWatcher::detectChanges(const QFileInfoList &first, const QFileIn
         {
             for(auto &fileSecond : second)
             {
-                if(fileFirst.baseName() != fileSecond.baseName() && fileFirst.size() == fileSecond.size())
+                if(fileFirst.fileName() == "." || fileFirst.fileName() == ".." ||
+                   fileSecond.fileName() == "." || fileSecond.fileName() == "..")
+                    continue;
+
+                if(fileFirst.filePath() != fileSecond.filePath() && fileFirst.birthTime() == fileSecond.birthTime())
                 {
-                    CREATE_FILE(FileEventType::renamed, fileFirst.absoluteFilePath(), fileFirst.isDir());
+                    CREATE_FILE(FileEventType::renamed, fileFirst.filePath(), fileFirst.isDir());
                     goto exitLoop;
                 } else if (fileFirst.lastModified() != fileSecond.lastModified())
                 {
-                    CREATE_FILE(FileEventType::edited, fileFirst.absoluteFilePath(), fileFirst.isDir());
+                    CREATE_FILE(FileEventType::edited, fileFirst.filePath(), fileFirst.isDir());
                     goto exitLoop;
                 }
             }
@@ -85,11 +89,11 @@ void IFileSystemWatcher::detectChanges(const QFileInfoList &first, const QFileIn
     }
     else if (firstListSize > secondListSize) //new file
     {
-        for(auto &file : second)
+        for(auto &file : first)
         {
-            if(first.contains(file))
+            if(!second.contains(file))
             {
-                CREATE_FILE(FileEventType::created, file.absoluteFilePath(), file.isDir());
+                CREATE_FILE(FileEventType::created, file.filePath(), file.isDir());
                 break;
             }
         }
@@ -100,7 +104,7 @@ void IFileSystemWatcher::detectChanges(const QFileInfoList &first, const QFileIn
         {
             if(!first.contains(file))
             {
-                CREATE_FILE(FileEventType::deleted, file.absoluteFilePath(), file.isDir());
+                CREATE_FILE(FileEventType::deleted, file.filePath(), file.isDir());
                 break;
             }
         }

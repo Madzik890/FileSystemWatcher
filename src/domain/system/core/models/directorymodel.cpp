@@ -42,7 +42,7 @@ void DirectoryModel::setFileSystemWatcher(IFileSystemWatcher *watcher)
 
         QObject::connect(_fileSystemWatcher, &IFileSystemWatcher::directoryAppend, this, [=]()
         {
-            const int index = _fileSystemWatcher->getDirectories().size();
+            const int index = _fileSystemWatcher->getDirectories().size() - 1;
             beginInsertRows(QModelIndex(), index, index);
         });
 

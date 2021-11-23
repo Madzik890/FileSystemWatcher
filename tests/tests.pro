@@ -7,16 +7,26 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES +=  \
+    ../src/domain/system/core/models/directorymodel.cpp \
+    ../src/domain/system/core/models/filemodel.cpp \
     ../src/domain/system/core/ports/incoming/ifilesystemwatcher.cpp \
     ../src/domain/system/infrastructure/filesystemwatcherqt.cpp \
     main.cpp \
-    stub/qfilesystemwatcherstub.cpp
+    stub/filesystemwatcherstub.cpp \
+    stub/qfilesystemwatcherstub.cpp \
+    tools/qstring.cpp
 
 HEADERS += \
+    ../src/domain/system/core/models/directorymodel.hpp \
+    ../src/domain/system/core/models/filemodel.hpp \
     ../src/domain/system/core/ports/incoming/ifilesystemwatcher.hpp \
     ../src/domain/system/infrastructure/filesystemwatcherqt.hpp \
-    filesystemwatcherqt_testcase.h \
+    directorymodel_testcase.hpp \
+    filemodel_testcase.hpp \
+    filesystemwatcherqt_testcase.hpp \
     multitest.h \
-    stub/qfilesystemwatcherstub.hpp
+    stub/filesystemwatcherstub.hpp \
+    stub/qfilesystemwatcherstub.hpp \
+    tools/qstring.hpp
 
 INCLUDEPATH += ../src

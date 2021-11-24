@@ -34,7 +34,7 @@ Item {
             }
         }
 
-        RowLayout{
+        RowLayout {
             Text {
                 text: qsTr("Watched paths")
                 font.pixelSize: 12
@@ -74,8 +74,7 @@ Item {
             height: 150
         }
 
-        RowLayout
-        {
+        RowLayout {
             Button {
                 text: "Clear"
                 onPressed: fileSystemWatcher.clear();

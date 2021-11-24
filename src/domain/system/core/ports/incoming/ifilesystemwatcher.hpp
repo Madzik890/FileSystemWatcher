@@ -28,9 +28,9 @@ namespace Domain
                             Q_INVOKABLE virtual void stop() noexcept = 0;
                             Q_INVOKABLE virtual void clear() noexcept;
 
-                        Q_INVOKABLE virtual void addPath(const QString &path) noexcept = 0;                        
-                        Q_INVOKABLE virtual void addPath(const QUrl &path) noexcept;
-                        Q_INVOKABLE virtual void removePath(const QString &path) noexcept = 0;
+                            Q_INVOKABLE virtual void addPath(const QString &path) noexcept = 0;
+                            Q_INVOKABLE virtual void addPath(const QUrl &path) noexcept;
+                            Q_INVOKABLE virtual void removePath(const QString &path) noexcept = 0;
 
                             virtual const QStringList getDirectories() const = 0;
                             virtual const QVector<FileItem> getFileItems() const;

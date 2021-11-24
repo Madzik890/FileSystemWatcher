@@ -1,5 +1,5 @@
-#ifndef FILESYSTEMWATCHERQT_TESTCASE_H
-#define FILESYSTEMWATCHERQT_TESTCASE_H
+#ifndef FILESYSTEMWATCHERQT_TESTCASE_HPP
+#define FILESYSTEMWATCHERQT_TESTCASE_HPP
 
 #include "multitest.h"
 #include "domain/system/core/ports/incoming/ifilesystemwatcher.hpp"
@@ -12,11 +12,20 @@ using namespace Domain::System::Infrastructure;
 #define EXAMPLE_PATH "./"
 #define EXAMPLE_PATH_LIST QStringList({ Q_FUNC_INFO, Q_FUNC_INFO, Q_FUNC_INFO })
 
+class FileSystemWatcherNativeTestCase;
+
 class FileSystemWatcherQtTestCase : public QObject
 {
     Q_OBJECT
 
+    friend class FileSystemWatcherNativeTestCase;
 public:
+    explicit FileSystemWatcherQtTestCase(QObject *parent = nullptr)
+        :QObject(parent)
+    {
+
+    }
+
     ~FileSystemWatcherQtTestCase()
     {
         if(_watcher)
@@ -27,12 +36,9 @@ public:
     }
 
 private slots:
-    void init()
+    virtual void init()
     {
-        _fileSystemWatcher = new QFileSystemWatcher();
-        Q_ASSERT(_fileSystemWatcher);
-
-        _watcher = dynamic_cast<IFileSystemWatcher*>(new FileSystemWatcherQt(_fileSystemWatcher));
+        _watcher = dynamic_cast<IFileSystemWatcher*>(new FileSystemWatcherQt());
         Q_ASSERT(_watcher);
     }
 
@@ -163,7 +169,6 @@ private slots:
     }
 
 private:
-    QFileSystemWatcher *_fileSystemWatcher = nullptr;
     IFileSystemWatcher *_watcher = nullptr;
 
     bool createDirectory (const QString &dirName)

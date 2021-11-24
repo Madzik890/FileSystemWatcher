@@ -21,6 +21,7 @@ namespace Domain
                     Q_INVOKABLE void stop() noexcept override;
 
                     Q_INVOKABLE void addPath(const QString &path) noexcept override;
+                    Q_INVOKABLE void addPath(const QUrl &path) noexcept override;
                     Q_INVOKABLE void removePath(const QString &path) noexcept override;
             };
         }

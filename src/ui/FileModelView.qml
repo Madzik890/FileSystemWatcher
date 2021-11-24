@@ -3,8 +3,9 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 import File 1.0
 
-Item {
+Rectangle {
     property var fileWatcher: fileSystemWatcher
+    color: "#f5f5f5"
 
     FileModel {
         id: fileModel
@@ -23,22 +24,22 @@ Item {
 
             Text {
                 text: model.event
-                Layout.fillWidth: true
+                //Layout.preferredWidth: 50
             }
 
             Text {
                 text: model.path
-                Layout.fillWidth: true
+                //Layout.preferredWidth: 150
             }
 
             Text {
                 text: model.isFolder
-                Layout.fillWidth: true
+                //Layout.preferredWidth: 200
             }
 
             Text {
                 text: model.timestamp
-                Layout.fillWidth: true
+                //Layout.preferredWidth: 250
             }
         }
     }

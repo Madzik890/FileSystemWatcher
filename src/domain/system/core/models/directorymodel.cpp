@@ -11,6 +11,7 @@ DirectoryModel::DirectoryModel(QObject *parent)
 
 int DirectoryModel::rowCount(const QModelIndex &parent) const
 {
+    (void)parent;
     if (!_fileSystemWatcher)
         return 0;
     return _fileSystemWatcher->getDirectories().size();
@@ -22,7 +23,7 @@ QVariant DirectoryModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     const QStringList dirList = _fileSystemWatcher->getDirectories();
-    if(dirList.size() > index.row())
+    if(role == Qt::DisplayRole && dirList.size() > index.row())
     {
         const QString dir = dirList[index.row()];
         return QVariant(dir);

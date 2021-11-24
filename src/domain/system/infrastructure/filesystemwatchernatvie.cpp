@@ -34,6 +34,11 @@ void FileSystemWatcherNative::addPath(const QString &path) noexcept
     Q_UNUSED(path);
 }
 
+void FileSystemWatcherNative::addPath(const QUrl &path) noexcept
+{
+    Q_UNUSED(path);
+}
+
 void FileSystemWatcherNative::removePath(const QString &path) noexcept
 {
     Q_UNUSED(path);

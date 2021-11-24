@@ -10,10 +10,12 @@ QFileSystemWatcherStub::QFileSystemWatcherStub(QObject *parent)
 
 void QFileSystemWatcherStub::emitDirectoryChanged(const QString &path)
 {
+    Q_UNUSED(path);
     //emit QFileSystemWatcher::directoryChanged(path);
 }
 
 void QFileSystemWatcherStub::emitFileChanged(const QString &path)
 {
+    Q_UNUSED(path);
     //emit QFileSystemWatcher::directoryChanged(path);
 }

@@ -44,9 +44,11 @@ void FileSystemWatcherQt::stop() noexcept
 
 void FileSystemWatcherQt::addPath(const QString &path) noexcept
 {
-    if(_fileWatcher->addPath(path))
+    const QFileInfo file(path);
+    if(file.exists())
     {
         emit IFileSystemWatcher::directoryAppend();
+        _fileWatcher->addPath(path);
         const QDir dir(path);
         _fileInfoList.push_back(std::make_pair(path, dir.entryInfoList(QDir::AllDirs | QDir::Files)));
         emit IFileSystemWatcher::directoryAppended();
@@ -59,7 +61,7 @@ void FileSystemWatcherQt::addPath(const QUrl &path) noexcept
 }
 
 void FileSystemWatcherQt::removePath(const QString &path) noexcept
-{    
+{
     const int index = _fileWatcher->directories().indexOf(path);
     if(index >= 0 && _fileWatcher->removePath(path))
     {

@@ -14,19 +14,13 @@ Item {
         RowLayout {
             width: parent.width
 
-            TextField {
-                id: textEdit
+            Text {
                 height: 30
-                text: "C:\\"
+                text: "Add directory"
             }
 
             Button {
                 text: "Add"
-                onPressed: fileSystemWatcher.addPath(textEdit.text);
-            }
-
-            Button {
-                text: "FileDialog"
                 onPressed: folderDialog.open()
 
                 FolderDialog {

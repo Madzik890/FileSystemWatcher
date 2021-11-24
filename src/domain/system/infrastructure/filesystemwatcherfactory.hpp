@@ -3,7 +3,7 @@
 
 #include "domain/system/core/ports/incoming/ifilesystemwatcher.hpp"
 
-using namespace Domain::System::Ports::Incoming;
+using namespace Domain::System::Core::Ports::Incoming;
 
 namespace Domain
 {

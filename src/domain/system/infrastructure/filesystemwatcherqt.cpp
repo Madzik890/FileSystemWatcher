@@ -1,7 +1,7 @@
 #include "filesystemwatcherqt.hpp"
 #include <QDir>
 
-using namespace Domain::System::Ports::Incoming;
+using namespace Domain::System::Core::Ports::Incoming;
 using namespace Domain::System::Infrastructure;
 
 FileSystemWatcherQt::FileSystemWatcherQt(QFileSystemWatcher *watcher, QObject *parent)
@@ -33,12 +33,12 @@ FileSystemWatcherQt::~FileSystemWatcherQt()
 void FileSystemWatcherQt::start() noexcept
 {
     stop();
-    QObject::connect(_fileWatcher, &QFileSystemWatcher::directoryChanged, this, &FileSystemWatcherQt::onDirChanged);
+    QObject::connect(_fileWatcher, &QFileSystemWatcher::directoryChanged, this, &FileSystemWatcherQt::onFileChanged);
 }
 
 void FileSystemWatcherQt::stop() noexcept
 {
-    QObject::disconnect(_fileWatcher, &QFileSystemWatcher::directoryChanged, this, &FileSystemWatcherQt::onDirChanged);
+    QObject::disconnect(_fileWatcher, &QFileSystemWatcher::directoryChanged, this, &FileSystemWatcherQt::onFileChanged);
 }
 
 void FileSystemWatcherQt::addPath(const QString &path) noexcept

@@ -1,7 +1,7 @@
 #include "filesystemwatchernatvie.hpp"
 
 using namespace Domain::System::Infrastructure;
-using namespace Domain::System::Ports::Incoming;
+using namespace Domain::System::Core::Ports::Incoming;
 
 FileSystemWatcherNative::FileSystemWatcherNative(QObject *parent)
     : IFileSystemWatcher(parent)

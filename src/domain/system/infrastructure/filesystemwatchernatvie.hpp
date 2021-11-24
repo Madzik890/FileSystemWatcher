@@ -3,13 +3,15 @@
 
 #include "domain/system/core/ports/incoming/ifilesystemwatcher.hpp"
 
+using namespace Domain::System::Core::Ports::Incoming;
+
 namespace Domain
 {
     namespace System
     {
         namespace Infrastructure
         {
-            class FileSystemWatcherNative : public Domain::System::Ports::Incoming::IFileSystemWatcher
+            class FileSystemWatcherNative : public IFileSystemWatcher
             {
                 public:
                     FileSystemWatcherNative(QObject *parent = nullptr);

@@ -6,7 +6,7 @@
 #include "domain/system/core/models/directorymodel.hpp"
 #include "domain/system/core/models/filemodel.hpp"
 
-using namespace Domain::System::Ports::Incoming;
+using namespace Domain::System::Core::Ports::Incoming;
 using namespace Domain::System::Infrastructure;
 using namespace Domain::System::Core::Models;
 

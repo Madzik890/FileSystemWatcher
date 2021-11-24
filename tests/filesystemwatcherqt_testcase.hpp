@@ -5,7 +5,7 @@
 #include "domain/system/core/ports/incoming/ifilesystemwatcher.hpp"
 #include "domain/system/infrastructure/filesystemwatcherqt.hpp"
 
-using namespace Domain::System::Ports::Incoming;
+using namespace Domain::System::Core::Ports::Incoming;
 using namespace Domain::System::Infrastructure;
 
 #define EXAMPLE_PATH "./"

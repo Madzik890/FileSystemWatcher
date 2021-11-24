@@ -11,49 +11,52 @@ namespace Domain
 {
     namespace System
     {
-        namespace Ports
+        namespace Core
         {
-            namespace Incoming
+            namespace Ports
             {
-                class IFileSystemWatcher : public QObject
+                namespace Incoming
                 {
-                    Q_OBJECT
-                    public:
-                        explicit IFileSystemWatcher(QObject *parent = nullptr);
-                        virtual ~IFileSystemWatcher() = default;
+                    class IFileSystemWatcher : public QObject
+                    {
+                        Q_OBJECT
+                        public:
+                            explicit IFileSystemWatcher(QObject *parent = nullptr);
+                            virtual ~IFileSystemWatcher() = default;
 
-                        Q_INVOKABLE virtual void start() noexcept = 0;
-                        Q_INVOKABLE virtual void stop() noexcept = 0;
-                        Q_INVOKABLE virtual void clear() noexcept;
+                            Q_INVOKABLE virtual void start() noexcept = 0;
+                            Q_INVOKABLE virtual void stop() noexcept = 0;
+                            Q_INVOKABLE virtual void clear() noexcept;
 
-                        Q_INVOKABLE virtual void addPath(const QString &path) noexcept = 0;                        
-                        Q_INVOKABLE virtual void removePath(const QString &path) noexcept = 0;
+                            Q_INVOKABLE virtual void addPath(const QString &path) noexcept = 0;
+                            Q_INVOKABLE virtual void removePath(const QString &path) noexcept = 0;
 
-                        virtual const QStringList getDirectories() const = 0;
-                        virtual const QVector<FileItem> getFileItems() const;
+                            virtual const QStringList getDirectories() const = 0;
+                            virtual const QVector<FileItem> getFileItems() const;
 
-                    signals:                        
-                        void fileAppend();
-                        void fileAppended();
+                        signals:
+                            void fileAppend();
+                            void fileAppended();
 
-                        void directoryAppend();
-                        void directoryAppended();
-                        void directoryRemove(const int index);
-                        void directoryRemoved();
+                            void directoryAppend();
+                            void directoryAppended();
+                            void directoryRemove(const int index);
+                            void directoryRemoved();
 
-                    protected://model
-                        QVector<FileItem> _fileItemModel;
+                        protected://model
+                            QVector<FileItem> _fileItemModel;
 
-                    protected:
-                        QVector<std::pair<QString, QFileInfoList>> _fileInfoList;
+                        protected:
+                            QVector<std::pair<QString, QFileInfoList>> _fileInfoList;
 
-                    protected slots:
-                        void onDirChanged(const QString &path);
+                        protected slots:
+                            void onFileChanged(const QString &path);
 
-                    private:
-                        bool checkDirExists(const QString &path);
-                        void detectChanges(const QFileInfoList &first, const QFileInfoList &second);                     
-                };
+                        private:
+                            bool checkDirExists(const QString &path);
+                            void detectChanges(const QFileInfoList &first, const QFileInfoList &second);
+                    };
+                }
             }
         }
     }

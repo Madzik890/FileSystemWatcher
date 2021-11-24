@@ -9,7 +9,7 @@
 
 #define FILE_NAME_LENGTH 15
 
-using namespace Domain::System::Ports::Incoming;
+using namespace Domain::System::Core::Ports::Incoming;
 using namespace Domain::System::Core::Models;
 using namespace Stub;
 

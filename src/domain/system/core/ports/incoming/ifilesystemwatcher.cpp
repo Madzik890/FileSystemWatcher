@@ -3,12 +3,12 @@
 #include <QFileInfoList>
 #include <QDir>
 
-using namespace Domain::System::Ports::Incoming;
+using namespace Domain::System::Core::Ports::Incoming;
 
 #define CREATE_FILE(eventType, path, isDir)                                                      \
-        Q_EMIT Domain::System::Ports::Incoming::IFileSystemWatcher::fileAppend();                \
+        Q_EMIT Domain::System::Core::Ports::Incoming::IFileSystemWatcher::fileAppend();                \
         _fileItemModel.push_back(FileItem(eventType, path, isDir));                              \
-        Q_EMIT Domain::System::Ports::Incoming::IFileSystemWatcher::fileAppended();
+        Q_EMIT Domain::System::Core::Ports::Incoming::IFileSystemWatcher::fileAppended();
 
 IFileSystemWatcher::IFileSystemWatcher(QObject *parent)
     :QObject(parent)
@@ -28,7 +28,7 @@ const QVector<FileItem> IFileSystemWatcher::getFileItems() const
     return _fileItemModel;
 }
 
-void IFileSystemWatcher::onDirChanged(const QString &path)
+void IFileSystemWatcher::onFileChanged(const QString &path)
 {       
     if(checkDirExists(path))
     {

@@ -5,14 +5,17 @@ using namespace Domain::System::Infrastructure;
 
 DirectoryWatcher::DirectoryWatcher(QObject *parent)
     : IDirectoryWatcher(parent),
-      QThread(parent)
+      QThread(parent),
+      _dirThreadEnd(false)
 {
     this->start();
 }
 
 DirectoryWatcher::~DirectoryWatcher()
 {
-
+    _dirThreadEnd.exchange(true);
+    this->quit();
+    this->wait();
 }
 
 bool DirectoryWatcher::addPath(const QString &path) noexcept
@@ -61,24 +64,29 @@ QStringList DirectoryWatcher::getDirectory() noexcept
 
 void DirectoryWatcher::run()
 {
-    QThread::msleep(100);
-    _dirListMutex.lock();
-    for(auto & dir : _dirList)
+    while(_dirThreadEnd.load())
     {
-        const QDir dirInfo(dir.first);
-        if(dirInfo.exists())
+        QThread::msleep(100);
+        _dirListMutex.lock();
+        for(auto & dir : _dirList)
         {
-            const QFileInfoList fileList = dirInfo.entryInfoList(QDir::AllDirs | QDir::Files);
-            if(dir.second != fileList)
+            const QDir dirInfo(dir.first);
+            if(dirInfo.exists())
             {
+                const QFileInfoList fileList = dirInfo.entryInfoList(QDir::AllDirs | QDir::Files);
+                if(dir.second != fileList)
+                {
+                    dir.second = fileList;
+                    emit fileChanged(dir.first);
+                }
+            }
+            else
+            {
+                _dirList.removeOne(dir);
                 emit fileChanged(dir.first);
             }
-        }
-        else
-        {
-            emit fileChanged(dir.first);
-        }
 
+        }
+        _dirListMutex.unlock();
     }
-    _dirListMutex.unlock();
 }

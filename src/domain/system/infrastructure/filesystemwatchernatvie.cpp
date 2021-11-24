@@ -1,5 +1,6 @@
 #include "filesystemwatchernatvie.hpp"
 #include "directorywatcher.hpp"
+#include <QDir>
 
 using namespace Domain::System::Infrastructure;
 using namespace Domain::System::Core::Ports::Incoming;
@@ -31,7 +32,7 @@ FileSystemWatcherNative::~FileSystemWatcherNative()
 
 const QStringList FileSystemWatcherNative::getDirectories() const
 {
-    return QStringList();
+    return _directoryWatcher->getDirectory();
 }
 
 void FileSystemWatcherNative::start() noexcept
@@ -47,10 +48,21 @@ void FileSystemWatcherNative::stop() noexcept
 
 void FileSystemWatcherNative::addPath(const QString &path) noexcept
 {
-    _directoryWatcher->addPath(path);
+    if(_directoryWatcher->addPath(path))
+    {
+        emit IFileSystemWatcher::directoryAppend();
+        const QDir dir(path);
+        _fileInfoList.push_back(std::make_pair(path, dir.entryInfoList(QDir::AllDirs | QDir::Files)));
+        emit IFileSystemWatcher::directoryAppended();
+    }
 }
 
 void FileSystemWatcherNative::removePath(const QString &path) noexcept
-{
-    _directoryWatcher->removePath(path);
+{    
+    const int index = _directoryWatcher->getDirectory().indexOf(path);
+    if(index >= 0 && _directoryWatcher->removePath(path))
+    {
+        emit IFileSystemWatcher::directoryRemove(index);
+        emit IFileSystemWatcher::directoryRemoved();
+    }
 }

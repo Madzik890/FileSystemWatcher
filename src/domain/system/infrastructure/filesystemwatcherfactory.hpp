@@ -14,7 +14,7 @@ namespace Domain
             class FileSystemWatcherFactory
             {
                 public:
-                    static IFileSystemWatcher *createFileSystemWatcher(const char *param);
+                    static IFileSystemWatcher *createFileSystemWatcher(const QString &param);
             };
         }
     }

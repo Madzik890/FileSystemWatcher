@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include <QMutex>
+#include <atomic>
 #include <QString>
 #include <QFileInfoList>
 #include "domain/system/core/ports/incoming/idirectorywatcher.hpp"
@@ -30,6 +31,7 @@ namespace Domain
 
                 private:
                     QMutex _dirListMutex;
+                    std::atomic_bool _dirThreadEnd;
                     QList<std::pair<QString, QFileInfoList>> _dirList;
             };
         }

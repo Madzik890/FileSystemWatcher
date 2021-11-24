@@ -4,10 +4,10 @@
 
 using namespace Domain::System::Infrastructure;
 
-IFileSystemWatcher *FileSystemWatcherFactory::createFileSystemWatcher(const char *param)
+IFileSystemWatcher *FileSystemWatcherFactory::createFileSystemWatcher(const QString &param)
 {
     IFileSystemWatcher *watcher = nullptr;
-    if(strcmp(param, "-n") == 0)
+    if(param == "-n")
     {
         watcher = new FileSystemWatcherNative();
     }

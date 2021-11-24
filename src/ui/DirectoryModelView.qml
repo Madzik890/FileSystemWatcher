@@ -5,7 +5,7 @@ import Dir 1.0
 
 Rectangle {
     property var fileWatcher: fileSystemWatcher
-    color: "grey"
+    color: "#f5f5f5"
 
     DirModel {
         id: dirModel

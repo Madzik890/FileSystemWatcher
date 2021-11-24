@@ -57,7 +57,7 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
             return QVariant(item._isFolder);
 
         case TimestampRole:        
-            return QVariant(item._timeStamp);
+            return QVariant(item._timeStamp.toString("dd/MM/yyyy hh:mm"));
     }
 
     return QVariant();

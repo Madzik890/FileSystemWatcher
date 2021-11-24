@@ -2,6 +2,9 @@
 #define FILESYSTEMWATCHERNATVIE_HPP
 
 #include "domain/system/core/ports/incoming/ifilesystemwatcher.hpp"
+#include "domain/system/core/ports/incoming/idirectorywatcher.hpp"
+
+using namespace Domain::System::Core::Ports::Incoming;
 
 namespace Domain
 {
@@ -9,10 +12,10 @@ namespace Domain
     {
         namespace Infrastructure
         {
-            class FileSystemWatcherNative : public Domain::System::Ports::Incoming::IFileSystemWatcher
+            class FileSystemWatcherNative : public IFileSystemWatcher
             {
                 public:
-                    FileSystemWatcherNative(QObject *parent = nullptr);
+                    FileSystemWatcherNative(IDirectoryWatcher *watcher = nullptr, QObject *parent = nullptr);
                     ~FileSystemWatcherNative();
 
                     const QStringList getDirectories() const override;
@@ -23,6 +26,10 @@ namespace Domain
                     Q_INVOKABLE void addPath(const QString &path) noexcept override;
                     Q_INVOKABLE void addPath(const QUrl &path) noexcept override;
                     Q_INVOKABLE void removePath(const QString &path) noexcept override;
+
+                private:
+                    bool _ownWatcher = false;
+                    IDirectoryWatcher *_directoryWatcher = nullptr;
             };
         }
     }

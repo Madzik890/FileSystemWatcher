@@ -4,13 +4,15 @@
 #include "domain/system/core/ports/incoming/ifilesystemwatcher.hpp"
 #include <QFileSystemWatcher>
 
+using namespace Domain::System::Core::Ports::Incoming;
+
 namespace Domain
 {
     namespace System
     {
         namespace Infrastructure
         {
-            class FileSystemWatcherQt : public Domain::System::Ports::Incoming::IFileSystemWatcher
+            class FileSystemWatcherQt : public IFileSystemWatcher
             {
                 public:
                     explicit FileSystemWatcherQt(QFileSystemWatcher *watcher = nullptr, QObject *parent = nullptr);
@@ -27,7 +29,7 @@ namespace Domain
 
                 private:
                     bool _ownFileWatcher = false;
-                    QFileSystemWatcher *_fileWatcher = nullptr;                    
+                    QFileSystemWatcher *_fileWatcher = nullptr;
             };
         }
     }

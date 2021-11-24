@@ -48,9 +48,11 @@ void FileSystemWatcherNative::stop() noexcept
 
 void FileSystemWatcherNative::addPath(const QString &path) noexcept
 {
-    if(_directoryWatcher->addPath(path))
+    const QFileInfo file(path);
+    if(file.exists())
     {
         emit IFileSystemWatcher::directoryAppend();
+        _directoryWatcher->addPath(path);
         const QDir dir(path);
         _fileInfoList.push_back(std::make_pair(path, dir.entryInfoList(QDir::AllDirs | QDir::Files)));
         emit IFileSystemWatcher::directoryAppended();

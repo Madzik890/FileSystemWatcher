@@ -26,7 +26,7 @@ void IFileSystemWatcher::clear() noexcept
 
 void IFileSystemWatcher::addPath(const QUrl &path) noexcept
 {
-    addPath(path.toString());
+    addPath(path.path().mid(1));
 }
 
 const QVector<FileItem> IFileSystemWatcher::getFileItems() const

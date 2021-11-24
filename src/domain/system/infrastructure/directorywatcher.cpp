@@ -6,14 +6,14 @@ using namespace Domain::System::Infrastructure;
 DirectoryWatcher::DirectoryWatcher(QObject *parent)
     : IDirectoryWatcher(parent),
       QThread(parent),
-      _dirThreadEnd(false)
+      _dirThreadEnd(true)
 {
     this->start();
 }
 
 DirectoryWatcher::~DirectoryWatcher()
 {
-    _dirThreadEnd.exchange(true);
+    _dirThreadEnd.exchange(false);
     this->quit();
     this->wait();
 }

@@ -4,6 +4,7 @@
 #include "multitest.h"
 #include "domain/system/core/ports/incoming/ifilesystemwatcher.hpp"
 #include "domain/system/infrastructure/filesystemwatcherqt.hpp"
+#include <QFile>
 
 using namespace Domain::System::Ports::Incoming;
 using namespace Domain::System::Infrastructure;
@@ -70,6 +71,90 @@ private slots:
         QCOMPARE(spyRemoved.count(), 1);
     }
 
+    void createDirectory()
+    {
+        const QString dirPath = QDir::homePath() + "/TestDir";
+        removeDirectory(dirPath);
+
+        _watcher->clear();
+        _watcher->addPath(QDir::homePath());
+        _watcher->start();
+        QSignalSpy spy(_watcher, &IFileSystemWatcher::fileAppend);
+
+        QCOMPARE(createDirectory(dirPath), true);
+        spy.wait(100);
+
+        QCOMPARE(spy.count(), 1);
+        const QVector<FileItem> filesItem = _watcher->getFileItems();
+        QCOMPARE(filesItem.size(), 1);
+        QVERIFY(filesItem[0]._eventType == FileEventType::created);
+        QVERIFY(filesItem[0]._path == dirPath);
+        QVERIFY(filesItem[0]._isFolder == true);
+        QVERIFY(removeDirectory(dirPath) == true);
+    }
+
+    void createFile()
+    {
+        const QString filePath = QDir::homePath() + "/TestFile.txt";
+        _watcher->clear();
+        _watcher->addPath(QDir::homePath());
+        _watcher->start();
+
+        QSignalSpy spy(_watcher, &IFileSystemWatcher::fileAppend);
+        QCOMPARE(createFile(filePath), true);
+        spy.wait(100);
+
+        QCOMPARE(spy.count(), 1);
+        const QVector<FileItem> filesItem = _watcher->getFileItems();
+        QCOMPARE(filesItem.size(), 1);
+        QVERIFY(filesItem[0]._eventType == FileEventType::created);
+        QVERIFY(filesItem[0]._path == filePath);
+        QVERIFY(filesItem[0]._isFolder == false);
+        QVERIFY(removeFile(filePath) == true);
+    }
+
+    void deleteDirectory()
+    {
+        const QString dirPath = QDir::homePath() + "/TestDir";
+        QCOMPARE(createDirectory(dirPath), true);
+
+        _watcher->clear();
+        _watcher->addPath(QDir::homePath());
+        _watcher->start();
+        QSignalSpy spy(_watcher, &IFileSystemWatcher::fileAppend);
+        QCOMPARE(removeDirectory(dirPath), true);
+
+        spy.wait(100);
+
+        QCOMPARE(spy.count(), 1);
+        const QVector<FileItem> filesItem = _watcher->getFileItems();
+        QCOMPARE(filesItem.size(), 1);
+        QVERIFY(filesItem[0]._eventType == FileEventType::deleted);
+        QVERIFY(filesItem[0]._path == dirPath);
+        QVERIFY(filesItem[0]._isFolder == true);
+    }
+
+    void deleteFile()
+    {
+        const QString filePath = QDir::homePath() + "/TestFile.txt";
+        QCOMPARE(createFile(filePath), true);
+
+        _watcher->clear();
+        _watcher->addPath(QDir::homePath());
+        _watcher->start();
+        QSignalSpy spy(_watcher, &IFileSystemWatcher::fileAppend);
+        QCOMPARE(removeFile(filePath), true);
+
+        spy.wait(100);
+
+        QCOMPARE(spy.count(), 1);
+        const QVector<FileItem> filesItem = _watcher->getFileItems();
+        QCOMPARE(filesItem.size(), 1);
+        QVERIFY(filesItem[0]._eventType == FileEventType::deleted);
+        QVERIFY(filesItem[0]._path == filePath);
+        QVERIFY(filesItem[0]._isFolder == false);
+    }
+
     void close()
     {
         _watcher->stop();
@@ -80,9 +165,32 @@ private slots:
 private:
     QFileSystemWatcher *_fileSystemWatcher = nullptr;
     IFileSystemWatcher *_watcher = nullptr;
+
+    bool createDirectory (const QString &dirName)
+    {
+        QDir dir;
+        return dir.mkdir(dirName);
+    }
+
+    bool removeDirectory(const QString &dirName)
+    {
+        QDir dir;
+        return dir.rmdir(dirName);
+    }
+
+    bool createFile(const QString &path)
+    {
+        QFile file(path);
+        return file.open(QFile::WriteOnly);
+    }
+
+    bool removeFile(const QString &path)
+    {
+        QFile file(path);
+        return file.remove();
+    }
 };
 
 TEST_DECLARE(FileSystemWatcherQtTestCase);
 
 #endif // FILESYSTEMWATCHERQT_TESTCASE_H
-

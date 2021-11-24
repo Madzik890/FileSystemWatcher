@@ -9,7 +9,7 @@
 
 #define DIR_NAME_LENGHT 50
 
-using namespace Domain::System::Ports::Incoming;
+using namespace Domain::System::Core::Ports::Incoming;
 using namespace Domain::System::Core::Models;
 using namespace Stub;
 

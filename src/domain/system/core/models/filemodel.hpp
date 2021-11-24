@@ -4,7 +4,7 @@
 #include <QAbstractTableModel>
 #include "domain/system/core/ports/incoming/ifilesystemwatcher.hpp"
 
-using namespace Domain::System::Ports::Incoming;
+using namespace Domain::System::Core::Ports::Incoming;
 
 namespace Domain
 {
@@ -17,7 +17,7 @@ namespace Domain
                 class FileModel : public QAbstractTableModel
                 {
                     Q_OBJECT
-                    Q_PROPERTY(Domain::System::Ports::Incoming::IFileSystemWatcher *fileSystemWatcher READ getFileSystemWatcher WRITE setFileSystemWatcher)
+                    Q_PROPERTY(Domain::System::Core::Ports::Incoming::IFileSystemWatcher *fileSystemWatcher READ getFileSystemWatcher WRITE setFileSystemWatcher)
                     public:
                         enum { EventRole = Qt::UserRole, PathRole, IsFolderRole, TimestampRole };
                         explicit FileModel(QObject *parent = nullptr);

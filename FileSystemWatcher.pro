@@ -10,7 +10,9 @@ SOURCES += \
         ./src/main.cpp \
         src/domain/system/core/models/directorymodel.cpp \
         src/domain/system/core/models/filemodel.cpp \
+        src/domain/system/core/ports/incoming/idirectorywatcher.cpp \
         src/domain/system/core/ports/incoming/ifilesystemwatcher.cpp \
+        src/domain/system/infrastructure/directorywatcher.cpp \
         src/domain/system/infrastructure/filesystemwatcherfactory.cpp \
         src/domain/system/infrastructure/filesystemwatchernatvie.cpp \
         src/domain/system/infrastructure/filesystemwatcherqt.cpp
@@ -33,7 +35,9 @@ HEADERS += \
     src/domain/system/core/models/directorymodel.hpp \
     src/domain/system/core/models/fileitem.hpp \
     src/domain/system/core/models/filemodel.hpp \
+    src/domain/system/core/ports/incoming/idirectorywatcher.hpp \
     src/domain/system/core/ports/incoming/ifilesystemwatcher.hpp \
+    src/domain/system/infrastructure/directorywatcher.hpp \
     src/domain/system/infrastructure/filesystemwatcherfactory.hpp \
     src/domain/system/infrastructure/filesystemwatchernatvie.hpp \
     src/domain/system/infrastructure/filesystemwatcherqt.hpp

@@ -2,6 +2,7 @@
 #include <QFileInfo>
 #include <QFileInfoList>
 #include <QDir>
+#include <QUrl>
 
 using namespace Domain::System::Ports::Incoming;
 
@@ -21,6 +22,11 @@ void IFileSystemWatcher::clear() noexcept
     emit fileAppend();
     _fileItemModel.clear();
     emit fileAppended();
+}
+
+void IFileSystemWatcher::addPath(const QUrl &path) noexcept
+{
+    addPath(path.toString());
 }
 
 const QVector<FileItem> IFileSystemWatcher::getFileItems() const

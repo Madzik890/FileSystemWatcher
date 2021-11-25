@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QFileInfoList>
+#include <QVector>
 #include "domain/system/core/models/fileitem.hpp"
 
 using namespace Domain::System::Core::Models;

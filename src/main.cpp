@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QtDebug>
 #include "domain/system/core/ports/incoming/ifilesystemwatcher.hpp"
 #include "domain/system/infrastructure/filesystemwatcherfactory.hpp"
 #include "domain/system/core/models/directorymodel.hpp"
@@ -22,8 +23,11 @@ int main(int argc, char *argv[])
     qmlRegisterType<Domain::System::Core::Models::DirectoryModel>("Dir", 1, 0, "DirModel");
 
     QString factoryParam = "";
-    if(argc > 2)
+
+    if (argc > 2)
+    {
         factoryParam = QString(argv[1]);
+    }
 
     IFileSystemWatcher *fileSystemWatcher = FileSystemWatcherFactory::createFileSystemWatcher(factoryParam);
 

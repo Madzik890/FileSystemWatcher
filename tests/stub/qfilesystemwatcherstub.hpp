@@ -2,6 +2,7 @@
 #define QFILESYSTEMWATCHERMOCK_HPP
 
 #include <QFileSystemWatcher>
+#include <QVector>
 
 namespace Stub
 {

@@ -14,8 +14,8 @@ Rectangle {
 
     TableView {
         id: fileTable
-        width: parent.width
-        height: 200
+        implicitWidth: parent.width
+        implicitHeight: 200
         clip: true
         model: fileModel
 

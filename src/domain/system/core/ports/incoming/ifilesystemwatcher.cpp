@@ -26,7 +26,11 @@ void IFileSystemWatcher::clear() noexcept
 
 void IFileSystemWatcher::addPath(const QUrl &path) noexcept
 {
+#if defined(__linux__) || defined(__unix__)
+    addPath(path.path());
+#else
     addPath(path.path().mid(1));
+#endif
 }
 
 const QVector<FileItem> IFileSystemWatcher::getFileItems() const

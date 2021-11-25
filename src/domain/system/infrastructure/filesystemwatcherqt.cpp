@@ -55,11 +55,6 @@ void FileSystemWatcherQt::addPath(const QString &path) noexcept
     }
 }
 
-void FileSystemWatcherQt::addPath(const QUrl &path) noexcept
-{
-    addPath(path.path().mid(1));
-}
-
 void FileSystemWatcherQt::removePath(const QString &path) noexcept
 {
     const int index = _fileWatcher->directories().indexOf(path);

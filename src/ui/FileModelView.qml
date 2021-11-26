@@ -1,11 +1,10 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
+import QtQuick.Controls 1.4
 import File 1.0
 
-Rectangle {
-    property var fileWatcher: fileSystemWatcher
-    color: "#f5f5f5"
+Item {
+    property var fileWatcher: fileSystemWatcher    
 
     FileModel {
         id: fileModel
@@ -15,33 +14,39 @@ Rectangle {
     TableView {
         id: fileTable
         implicitWidth: parent.width
-        implicitHeight: 200
+        implicitHeight: 160
         clip: true
         model: fileModel
+        backgroundVisible: true
+        alternatingRowColors: true
 
-        delegate: RowLayout {
-            width: parent.width
-
-            Text {
-                text: model.event
-                //Layout.preferredWidth: 50
-            }
-
-            Text {
-                text: model.path
-                //Layout.preferredWidth: 150
-            }
-
-            Text {
-                text: model.isFolder
-                //Layout.preferredWidth: 200
-            }
-
-            Text {
-                text: model.timestamp
-                //Layout.preferredWidth: 250
-            }
+        TableViewColumn {
+            role: "event"
+            title: "Event type"
+            elideMode: Text.ElideLeft
+            horizontalAlignment: Text.AlignHCenter
+            width: parent.width / 10 + 70
+        }
+        TableViewColumn {
+            role: "path"
+            title: "Path"
+            elideMode: Text.ElideLeft
+            horizontalAlignment: Text.AlignHCenter
+            width: parent.width / 10 + 200
+        }
+        TableViewColumn {
+            role: "isFolder"
+            title: "Is folder"
+            elideMode: Text.ElideLeft
+            horizontalAlignment: Text.AlignHCenter
+            width: parent.width / 10 + 30
+        }
+        TableViewColumn {
+            role: "timestamp"
+            title: "Timestamp"
+            elideMode: Text.ElideLeft
+            horizontalAlignment: Text.AlignHCenter
+            width: parent.width / 10 + 80
         }
     }
-
 }

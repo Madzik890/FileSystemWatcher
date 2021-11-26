@@ -46,29 +46,6 @@ Item {
             height: 150
         }
 
-        RowLayout {
-            spacing: 1
-            Text {
-                Layout.preferredWidth: 150
-                text: "Event type"
-            }
-
-            Text {
-                Layout.preferredWidth: 150
-                text: "Path"
-            }
-
-            Text {
-                Layout.preferredWidth: 150
-                text: "Is folder"
-            }
-
-            Text {
-                Layout.preferredWidth: 150
-                text: "Timestamp"
-            }
-        }
-
         FileModelView {
             width: parent.width
             height: 150

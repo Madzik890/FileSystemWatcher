@@ -3,11 +3,11 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Qt.labs.platform 1.1
 
-Item {
+Rectangle {
     property var fileWatcher: fileSystemWatcher
+    color: "#f5f5f5"
 
-    ColumnLayout
-    {
+    ColumnLayout {
         width: parent.width
         height: parent.height
 
@@ -57,12 +57,23 @@ Item {
                 onPressed: fileSystemWatcher.clear();
             }
             Button {
+                id: startButton
                 text: "Start"
-                onPressed: fileSystemWatcher.start();
+                onPressed: {
+                    fileSystemWatcher.start();
+                    highlighted = true;
+                    stopButton.highlighted = false;
+                }
             }
             Button {
+                id: stopButton
                 text: "Stop"
-                onPressed: fileSystemWatcher.stop();
+                highlighted: true
+                onPressed: {
+                    fileSystemWatcher.stop();
+                    highlighted = true;
+                    startButton.highlighted = false;
+                }
             }
         }
     }

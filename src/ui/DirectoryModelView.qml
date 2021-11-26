@@ -5,7 +5,7 @@ import Dir 1.0
 
 Rectangle {
     property var fileWatcher: fileSystemWatcher
-    color: "#f5f5f5"
+    border.width: 1
 
     DirModel {
         id: dirModel
@@ -19,7 +19,7 @@ Rectangle {
         model: dirModel
 
         delegate: RowLayout {
-            width: parent.width
+            width: parent.width            
 
             Text {
                 text: model.display

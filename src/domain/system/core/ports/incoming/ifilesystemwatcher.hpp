@@ -39,6 +39,8 @@ namespace Domain
                         signals:
                             void fileAppend();
                             void fileAppended();
+                            void fileClean();
+                            void fileCleaned();
 
                             void directoryAppend();
                             void directoryAppended();

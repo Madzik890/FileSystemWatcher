@@ -19,9 +19,9 @@ IFileSystemWatcher::IFileSystemWatcher(QObject *parent)
 
 void IFileSystemWatcher::clear() noexcept
 {
-    emit fileAppend();
+    emit fileClean();
     _fileItemModel.clear();
-    emit fileAppended();
+    emit fileCleaned();
 }
 
 void IFileSystemWatcher::addPath(const QUrl &path) noexcept

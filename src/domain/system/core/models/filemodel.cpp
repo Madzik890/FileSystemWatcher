@@ -93,6 +93,16 @@ void FileModel::setFileSystemWatcher(IFileSystemWatcher *watcher)
             endInsertRows();
         });
 
+        QObject::connect(_fileSystemWatcher, &IFileSystemWatcher::fileClean, this, [=]()
+        {
+            const int lastIndex = _fileSystemWatcher->getFileItems().size() - 1;
+            beginRemoveRows(QModelIndex(), 0, lastIndex);
+        });
+
+        QObject::connect(_fileSystemWatcher, &IFileSystemWatcher::fileCleaned, this, [=]()
+        {
+            endRemoveRows();
+        });
 
         endResetModel();
     }

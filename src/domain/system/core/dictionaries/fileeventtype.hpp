@@ -11,7 +11,7 @@ namespace Domain
         {
             namespace Dictionaries
             {
-                enum class FileEventType
+                enum class FileEventType : uint8_t
                 {
                     created,
                     deleted,

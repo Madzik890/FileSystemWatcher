@@ -63,30 +63,6 @@ QVariant FileModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant FileModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-    Q_UNUSED(section);
-    if(orientation == Qt::Horizontal)
-    {
-        switch(role)
-        {
-            case EventRole:
-                return QVariant("Event type");
-
-            case PathRole:
-                return QVariant("Path");
-
-            case IsFolderRole:
-                return QVariant("Is folder");
-
-            case TimestampRole:
-                return QVariant("Timestamp");
-        }
-    }
-
-    return QVariant();
-}
-
 QHash<int, QByteArray> FileModel::roleNames() const
 {
     QHash<int, QByteArray> names;
